@@ -40,15 +40,23 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('foodBuddyCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('foodBuddyCtrl', ['$scope', '$stateParams', 'BlankFactory',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams, BlankFactory) {
 
     var self = this;
-    self.sample = function(){
-        console.log(1);
-    }();
+    
+    init();
+
+    function init(){
+        var age = 13, 
+            gender = 'female',
+            weight = 55,
+            height = 55;
+
+        console.log(BlankFactory.calculateCalories(age, gender, height, weight));
+    }
 
 }])
    
