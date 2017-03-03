@@ -1,13 +1,10 @@
 angular.module('app.services', [])
+    .factory('fooBuService', fooBuService);
 
-.factory('BlankFactory', [function(){
-
-    //weight kg, height cm
-
-    return{
-        calculateBMI : calculateBMI,
-        calculateCalories: calculateCalories
-    };
+function fooBuService(){
+    var vm = this;
+    vm.calculateBMI = calculateBMI;
+    vm.calculateCalories = calculateCalories;
 
     function calculateBMI(height, weight){
 
@@ -37,8 +34,6 @@ angular.module('app.services', [])
     function centimetersToInches(num){
         return num / 2.54;
     }
-}])
+}
 
-.service('BlankService', [function(){
-
-}]);
+fooBuService.$inject = [];

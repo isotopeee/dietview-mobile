@@ -4,18 +4,19 @@
       <ion-list id="signup-list7">
         <label class="item item-input" id="signup-input7">
           <span class="input-label">Name</span>
-          <input type="text" placeholder="">
+          <input type="text" placeholder="" ng-model="vm.profile.name">
         </label>
         <label class="item item-input" id="signup-input8">
           <span class="input-label">Username</span>
-          <input type="text" placeholder="">
+          <input type="text" placeholder="" ng-model="vm.profile.username">
         </label>
         <label class="item item-input" id="signup-input9">
           <span class="input-label">Password</span>
-          <input type="text" placeholder="">
+          <input type="password" placeholder="" ng-model="vm.profile.password">
         </label>
       </ion-list>
-      <a ui-sref="tabsController.diView" id="signup-button16" class="button button-stable  button-block">Sign up</a>
+      <!--<a ui-sref="tabsController.diView" id="signup-button16" class="button button-stable  button-block">Sign up</a>-->
+      <button type="submit" class="button button-stable button-block" ng-click="vm.signUp(vm.profile)" >Sign up</button>
     </form>
   </ion-content>
 </ion-view>

@@ -1,28 +1,25 @@
-describe('service test', function(){
+describe('BlankFactory factory', function(){
 
-    var mockBlankFactory;
+    var BlankFactory;
 
-     beforeEach(function(){
-        module(function($provide){
-        $provide.service('$window', function(){
-            this.alert = jasmine.createSpy('alert');
-        });
-        $provide.service('modalSvc', function(){
-            this.showModalDialog = jasmine.createSpy('showModalDialog');
-        });
-        });
+    beforeEach(angular.mock.module('app.services'));
 
-        module('services');
-    });
-
-    beforeEach(inject(function(BlankFactory){
-        mockBlankFactory = BlankFactory;
+    beforeEach(inject(function(_BlankFactory_){
+        BlankFactory = _BlankFactory_;
     }));
 
-    it('should return 734 calories', function(){
-        
-        mockBlankFactory.calculateCalories(13, 'male', 55, 55);
+    it('should exist', function(){
+        expect(BlankFactory).toBeDefined();
+    });
 
-        expect(mockBlankFactory.calculateCalories).toHaveBeenCalled();
+    describe('.sample()', function(){
+
+        it('should exist', function(){
+            expect(BlankFactory.sample).toBeDefined();
+        });
+
+        it('should result to 4', function(){
+            expect(BlankFactory.sample(2,2)).toEqual(4);
+        });
     });
 });

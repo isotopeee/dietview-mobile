@@ -7,10 +7,8 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
 
-      .state('tabsController.dietetics', {
+    .state('tabsController.dietetics', {
     url: '/tabs/vital-stats',
     views: {
       'tab3': {
@@ -69,6 +67,13 @@ angular.module('app.routes', [])
     controller: 'settingsCtrl'
   })
 
+   .state('profile', {
+    url: '/profile',
+    templateUrl: 'templates/profile.html',
+    controller: 'profileCtrl',
+    controllerAs: 'vm'
+  })
+
   .state('tabsController', {
     url: '/page1',
     templateUrl: 'templates/tabsController.html',
@@ -76,18 +81,22 @@ angular.module('app.routes', [])
   })
 
   .state('login', {
-    url: '/page11',
+    url: '/login',
     templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
+    controller: 'loginCtrl',
+    controllerAs: 'vm'
   })
 
   .state('signup', {
-    url: '/page12',
+    url: '/signup',
     templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
+    controller: 'signupCtrl',
+    controllerAs: 'vm'
   })
 
-$urlRouterProvider.otherwise('/page1/page9')
+  $urlRouterProvider
+    .when('/', '/login')
+    .otherwise('/login')
 
   
 

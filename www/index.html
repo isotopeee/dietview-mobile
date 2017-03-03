@@ -56,7 +56,8 @@
      
     <script src="js/directives.js"></script>
      
-    <script src="js/services.js"></script>
+    <script src="js/services/fooBuService.js"></script>
+    <script src="js/services/loadingService.js"></script>
     
 
     <!-- Only required for Tab projects w/ pages in multiple tabs 
@@ -80,7 +81,7 @@
       <ion-header-bar class="bar-stable">
         <div class="title">Menu</div>
       </ion-header-bar>
-      <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
+      <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header">
         <ion-list id="menu-list2" data-componentid="list2">
           <ion-item class="item-icon-left" id="menu-list-item32" ui-sref="tabsController.diView" menu-close="" data-componentid="list-item32">
             <i class="icon ion-ios-search-strong"></i>Explore</ion-item>
@@ -88,8 +89,12 @@
             <i class="icon ion-android-add-circle"></i>Subscriptions</ion-item>
           <ion-item class="item-icon-left" id="menu-list-item34" ui-sref="messaging" menu-close="" data-componentid="list-item34">
             <i class="icon ion-android-mail"></i>Messages</ion-item>
+          <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="profile" menu-close="" data-componentid="list-item33">
+            <i class="icon ion-person"></i>My Profile</ion-item>
           <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="settings" menu-close="" data-componentid="list-item33">
             <i class="icon ion-android-settings"></i>Settings</ion-item>
+           <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="login" menu-close="" data-componentid="list-item33">
+            <i class="icon ion-power"></i>Logout</ion-item>
         </ion-list>
       </ion-content>
     </ion-side-menu>
