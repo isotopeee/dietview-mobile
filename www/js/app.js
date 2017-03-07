@@ -1,17 +1,17 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',])
+angular.module('app', ['ionic', 'ionic-datepicker', 'app.controllers', 'app.routes', 'app.directives','app.services', 'ngResource', 'lbServices', 'app.interceptors'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
-  
-
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
+})
 
+.config(function(LoopBackResourceProvider){
+  LoopBackResourceProvider.setUrlBase('https://dietview-api.mybluemix.net/api');
+})
+
+.config(function($httpProvider){
+  $httpProvider.interceptors.push('loadingInterceptor');
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 })
 
 .run(function($ionicPlatform) {
@@ -27,6 +27,18 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
       StatusBar.styleDefault();
     }
   });
+})
+
+.run(function($rootScope, $state, User){
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+        if(!User.isAuthenticated()){
+          if(!toState.public){
+            event.preventDefault();
+            $state.go('login');
+            console.log('Not allowed');
+          }
+        }
+    });
 })
 
 /*

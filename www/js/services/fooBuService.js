@@ -3,37 +3,37 @@ angular.module('app.services', [])
 
 function fooBuService(){
     var vm = this;
-    vm.calculateBMI = calculateBMI;
-    vm.calculateCalories = calculateCalories;
+    // vm.calculateBMI = calculateBMI;
+    // vm.calculateCalories = calculateCalories;
 
-    function calculateBMI(height, weight){
+    // function calculateBMI(height, weight){
 
-        var weightInPounds = kilogramsToPounds(weight),
-            heightInInches = centimetersToInches(height);
+    //     var weightInPounds = kilogramsToPounds(weight),
+    //         heightInInches = centimetersToInches(height);
 
-        return (weightInPounds / (heightInInches * heightInInches)) * 703;
-    }
+    //     return (weightInPounds / (heightInInches * heightInInches)) * 703;
+    // }
 
-    function calculateCalories(age, gender, height, weight){
+    // function calculateCalories(age, gender, height, weight){
         
-        return gender === 'male' ? getCaloriesForMen() : getCaloriesForWomen();
+    //     return gender === 'male' ? getCaloriesForMen() : getCaloriesForWomen();
 
-        function getCaloriesForMen(){
-            return (5 * weight) + (6.25 * height) - (5 * age) + 5;
-        }
+    //     function getCaloriesForMen(){
+    //         return (5 * weight) + (6.25 * height) - (5 * age) + 5;
+    //     }
 
-        function getCaloriesForWomen(){
-            return (5 * weight) + (6.25 * height) - (5 * age) - 161;
-        }
-    }
+    //     function getCaloriesForWomen(){
+    //         return (5 * weight) + (6.25 * height) - (5 * age) - 161;
+    //     }
+    // }
 
-    function kilogramsToPounds(num){
-        return (1 / 2.2) * num;
-    }
+    // function kilogramsToPounds(num){
+    //     return (1 / 2.2) * num;
+    // }
 
-    function centimetersToInches(num){
-        return num / 2.54;
-    }
+    // function centimetersToInches(num){
+    //     return num / 2.54;
+    // }
 }
 
 fooBuService.$inject = [];

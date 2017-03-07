@@ -2,21 +2,35 @@
   <ion-content padding="true" class="has-header">
     <form id="signup-form13" class="list">
       <ion-list id="signup-list7">
-        <label class="item item-input" id="signup-input7">
-          <span class="input-label">Name</span>
-          <input type="text" placeholder="" ng-model="vm.profile.name">
-        </label>
-        <label class="item item-input" id="signup-input8">
-          <span class="input-label">Username</span>
-          <input type="text" placeholder="" ng-model="vm.profile.username">
-        </label>
-        <label class="item item-input" id="signup-input9">
-          <span class="input-label">Password</span>
-          <input type="password" placeholder="" ng-model="vm.profile.password">
-        </label>
+        <ion-item class="item-divider">
+          User
+        </ion-item>
+        <ion-item>
+          <label class="item-input">
+            <span class="input-label">Username</span>
+            <input type="text" placeholder="" ng-model="vm.data.user.username">
+          </label>
+        </ion-item>
+        <ion-item>
+          <label class="item-input">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="" ng-model="vm.data.user.email">
+          </label>
+        </ion-item>
+        <ion-item>
+          <label class="item-input">
+            <span class="input-label">Password</span>
+            <input type="password" placeholder="" ng-model="vm.data.user.password">
+          </label>
+        </ion-item>
+         <ion-item>
+          <label class="item-input">
+            <span class="input-label">Confirm Password</span>
+            <input type="password" placeholder="" ng-model="vm.confirmPassword">
+          </label>
+        </ion-item>
       </ion-list>
-      <!--<a ui-sref="tabsController.diView" id="signup-button16" class="button button-stable  button-block">Sign up</a>-->
-      <button type="submit" class="button button-stable button-block" ng-click="vm.signUp(vm.profile)" >Sign up</button>
+      <button type="submit" class="button button-stable button-block" ng-click="vm.signUp(vm.data)" >Sign up</button>
     </form>
   </ion-content>
 </ion-view>

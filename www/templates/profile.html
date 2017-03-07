@@ -1,25 +1,80 @@
 <ion-view title="Profile" id="profile">
   <ion-content padding="true" class="has-header">
     <form>  
-        <div class="list">
-            <label class="item item-input">
-                <span class="input-label">Username</span>
-                <input type="text" ng-model="vm.profile.username">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Password</span>
-                <input type="password" ng-model="vm.profile.password">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Height</span>
-                <input type="text" ng-model="vm.profile.height" >
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Weight</span>
-                <input type="text" ng-model="vm.profile.weight">
-            </label>
-            <button type="submit" class="button button-positive button-full" ng-click="vm.saveChanges(vm.profile)">Save Changes</button>
-        </div>
+        <ion-list>
+            <ion-item class="item-divider">
+              General
+            </ion-item>
+           <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Firstname</span>
+                    <input type="text" ng-model="vm.data.account.profile.firstname">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Lastname</span>
+                    <input type="text" ng-model="vm.data.account.profile.lastname">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Username</span>
+                    <input type="text" ng-model="vm.data.username">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" ng-model="vm.data.email">
+                </label>
+            </ion-item>
+            <ion-item>
+              <label class="item-input item-select" id="signup-input9">
+                <span class="input-label">Birthday</span>
+                <input type="date" ng-model="vm.data.account.profile.birthday">
+              </label>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item class="item-divider">
+                Gender
+            </ion-item>
+            <ion-item>
+              <label class="item-input" id="signup-input9">
+                  <ion-radio ng-model="vm.data.account.profile.gender" ng-value="'male'">Male</ion-radio>
+                  <ion-radio ng-model="vm.data.account.profile.gender" ng-value="'female'">Female</ion-radio>
+              </label>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-item class="item-divider">
+              Address
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">No</span>
+                    <input type="text" ng-model="vm.data.account.profile.address.no">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Street Name</span>
+                    <input type="text" ng-model="vm.data.account.profile.address.street">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">City</span>
+                    <input type="text" ng-model="vm.data.account.profile.address.city">
+                </label>
+            </ion-item>
+        </ion-list>
+
+
+        <button type="submit" class="button button-positive button-full" ng-click="vm.saveChanges(vm.data)">Save Changes</button>
     </form>
+
   </ion-content>
 </ion-view>

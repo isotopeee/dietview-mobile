@@ -9,7 +9,7 @@ function loadingService($ionicLoading){
 
     function showLoading(){
         return $ionicLoading.show({
-            template: 'Please wait...'
+            template: 'Please wait... <ion-spinner></ion-spinner>'
         }).then(function(){
             return 'LoadingService: showLoading';
         });

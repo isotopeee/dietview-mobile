@@ -1,0 +1,30 @@
+<ion-view title="Vitals" id="vitals" >
+  <ion-content padding="true">
+    <form>  
+        <ion-list>
+            <ion-item class="item-divider">
+                Vital Information
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Height(ft, in)</span>
+                    <input type="text" ng-model="vm.data.account.vitals.height">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Weight(kg)</span>
+                    <input type="text" ng-model="vm.data.account.vitals.weight">
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">BMI</span>
+                    <input type="text" ng-model="vm.data.account.vitals.bmi" disabled>
+                </label>
+            </ion-item>
+        </ion-list>
+        <button type="submit" class="button button-positive button-full" ng-click="vm.saveChanges(vm.data)">Save Changes</button>
+    </form>
+  </ion-content>
+</ion-view>
