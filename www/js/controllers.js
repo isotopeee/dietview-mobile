@@ -58,8 +58,8 @@ function ($scope, $stateParams, $state, User) {
 
 }])
    
-.controller('loginCtrl', ['$scope', '$stateParams', '$state', 'loadingService', 'User',
-function ($scope, $stateParams, $state, loadingService, User) {
+.controller('loginCtrl', ['$scope', '$stateParams', '$state', 'User',
+function ($scope, $stateParams, $state, User) {
     var vm = this;
     vm.profile = {};
     vm.login = login;
@@ -91,8 +91,8 @@ function ($scope, $stateParams, $state, User) {
     function signUp(data){
 
         data.user.account = {};
+        data.user.account.vitals = {};
         data.user.messages = [];
-        data.user.vitals = {};
         data.user.activeSubscription = {};
         data.subscriptions = [];
         data.status = 'active';
@@ -106,7 +106,7 @@ function ($scope, $stateParams, $state, User) {
                 console.log(err);
             });
         }else{
-            alert('Invalid password!');
+            alert('Please make sure your password and confirm password is the same!');
         }
     }
 
@@ -119,10 +119,11 @@ function ($scope, $stateParams, $state, User) {
     }
 }])
 
-.controller('profileCtrl', ['$scope', '$stateParams', 'User', function($scope, $stateParams, User){
+.controller('profileCtrl', ['$scope', '$stateParams', 'User', 'bmiService', function($scope, $stateParams, User, bmiService){
     var vm = this;
     vm.data = {};
     vm.saveChanges = saveChanges;
+    vm.computeBMI = computeBMI;
 
     loadProfile();
 
@@ -147,6 +148,16 @@ function ($scope, $stateParams, $state, User) {
         }, function(err){
             console.log(err);
         })
+    }
+
+    /**
+     * Used in ng-change event
+     */
+
+    function computeBMI(heightFt, heightInc, weight){
+        vm.data.account.vitals.bmi = bmiService
+            .computeBMI(vm.data.account.vitals.height.feet, vm.data.account.vitals.height.inches, vm.data.account.vitals.weight);
+        vm.data.account.vitals.status = bmiService.bmiStatus(vm.data.account.vitals.bmi);
     }
 }])
  

@@ -5,19 +5,19 @@
       <ion-slide-page id="login-slide25" style="background:url(&quot;img/Jy4lEK97TLeopjmOJtdd_healthy-food.png&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
       <ion-slide-page id="login-slide26" style="background:url(&quot;img/2ej4Zh8jQ7agfU7OhvGw_f918bc86d7dce2ab97e4862657fd0ce3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
     </ion-slides>
-    <form id="login-form11" class="list">
+    <form name="form" class="list">
       <ion-list id="login-list6">
         <label class="item item-input" id="login-input5">
           <span class="input-label">Username</span>
-          <input type="text" placeholder="" ng-model="vm.profile.username">
+          <input type="text" placeholder="" ng-model="vm.profile.username" required>
         </label>
         <label class="item item-input" id="login-input6">
           <span class="input-label">Password</span>
-          <input type="password" placeholder="" ng-model="vm.profile.password">
+          <input type="password" placeholder="" ng-model="vm.profile.password" required>
         </label>
       </ion-list>
       <div class="spacer" style="width: 300px; height: 11px;"></div>
-      <button type="submit" class="button button-stable button-block" ng-click="vm.login(vm.profile)">Log in</button>
+      <button type="submit" class="button button-positive button-full" ng-disabled="form.$invalid" ng-click="vm.login(vm.profile)">Log in</button>
       <a ui-sref="signup" id="login-button13" class="button button-positive  button-block button-clear">Or create an account</a>
     </form>
   </ion-content>

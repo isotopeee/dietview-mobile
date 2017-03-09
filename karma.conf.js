@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Fri Feb 24 2017 19:29:16 GMT+0800 (Malay Peninsula Standard Time)
-
 module.exports = function(config) {
   config.set({
 
@@ -19,8 +18,9 @@ module.exports = function(config) {
       'www/lib/ionicuirouter/ionicUIRouter.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'www/js/app.js',
-      'www/js/services.js',
-      'test/serviceTest.js'
+      'www/js/services/services.js',
+      'www/js/services/bmiService.js',
+      'test/bmiServiceTest.js'
     ],
 
 

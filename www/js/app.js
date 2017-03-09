@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'ionic-datepicker', 'app.controllers', 'app.routes', 'app.directives','app.services', 'ngResource', 'lbServices', 'app.interceptors'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes','app.directives', 'ngResource', 'lbServices',  'app.interceptors', 'app.services'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
