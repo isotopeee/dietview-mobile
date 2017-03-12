@@ -18,6 +18,9 @@
       </ion-list>
       <div class="spacer" style="width: 300px; height: 11px;"></div>
       <button type="submit" class="button button-positive button-full" ng-disabled="form.$invalid" ng-click="vm.login(vm.profile)">Log in</button>
+      <button class="button icon-left ion-social-facebook button-positive button-full" ng-click="vm.loginFacebook();">
+                    <span>Login with Facebook</span>
+                </button>
       <a ui-sref="signup" id="login-button13" class="button button-positive  button-block button-clear">Or create an account</a>
     </form>
   </ion-content>

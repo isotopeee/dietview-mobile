@@ -1,3 +1,14 @@
+## Version 0.2'
+    - Profile management
+        - Can now update profile
+        - Implemented getCurrent instead of conditioning with getCachedCurrent to avoid cache problem
+    - Encapsulated sign up function to re-use during sign up in the creating of account and during social log in
+    - Added facebook login plugin (not yet finish though)
+    - Changed bmiService - computeBMI to return with 2 decimal places
+    - Added status item in vitals page
+    - Replaced address no & street to address line for user experience
+    - Added cordova plugins to be able to request for api
+
 ## Version 0.1
 
     - Login

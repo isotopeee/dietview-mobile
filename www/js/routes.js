@@ -10,6 +10,7 @@ angular.module('app.routes', [])
 
     .state('tabsController.dietetics', {
     url: '/tabs/vital-stats',
+    cache: false,
     public: false,
     views: {
       'tab3': {
@@ -77,6 +78,7 @@ angular.module('app.routes', [])
    .state('profileTabs', {
     url: '/profileTabs',
     public: false,
+    cache: false,
     templateUrl: 'templates/profileTabs.html',
     abstract: true
   })

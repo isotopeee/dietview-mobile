@@ -6,6 +6,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes','app.directives'
 
 .config(function(LoopBackResourceProvider){
   LoopBackResourceProvider.setUrlBase('https://dietview-api.mybluemix.net/api');
+  // LoopBackResourceProvider.setUrlBase('http://192.168.137.239:3000/api');
 })
 
 .config(function($httpProvider){
@@ -35,7 +36,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes','app.directives'
           if(!toState.public){
             event.preventDefault();
             $state.go('login');
-            console.log('Not allowed');
           }
         }
     });

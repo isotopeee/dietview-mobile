@@ -15,7 +15,7 @@ function bmiService(){
             weight = weight,
             bmi = 0;
 
-        return bmi = Math.round((weight / (height * height) * 703));
+        return bmi = (weight / (height * height) * 703).toFixed(2);
     }
 
     function bmiStatus(bmi){

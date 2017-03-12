@@ -4,7 +4,7 @@
         <ion-list>
             <ion-item class="item-divider">
                 Vital Information
-                {{vm.data.account.vitals.status}}
+
             </ion-item>
             <ion-item>
                 <label class="item-input item-select">
@@ -27,14 +27,20 @@
             <ion-item>
                 <label class="item-input">
                     <span class="input-label">Weight(lb)</span>
-                    <input id="weight" type="text" ng-model="vm.data.account.vitals.weight" ng-minlength="2" ng-maxlength="3"
+                    <input id="weight" type="number" ng-model="vm.data.account.vitals.weight" ng-minlength="2" ng-maxlength="3"
                         ng-change="vm.computeBMI()" required>
                 </label>
             </ion-item>
             <ion-item>
                 <label class="item-input">
                     <span class="input-label">BMI</span>
-                    <input id="bmi" type="text" ng-model="vm.data.account.vitals.bmi" disabled>
+                    <span class="input-label">{{vm.data.account.vitals.bmi}}</span>
+                </label>
+            </ion-item>
+            <ion-item>
+                <label class="item-input">
+                    <span class="input-label">Status</span>
+                    <span class="input-label">{{vm.data.account.vitals.status}}</span>
                 </label>
             </ion-item>
         </ion-list>
