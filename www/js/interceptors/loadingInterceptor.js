@@ -7,7 +7,7 @@ function loadingInterceptor($injector){
     return {
         request: function(config){
             var loadingService = $injector.get('loadingService');
-            loadingService.showLoading();
+            loadingService.showLoading({});
             return config;
         },
         requestError: function(config){

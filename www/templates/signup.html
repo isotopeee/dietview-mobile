@@ -8,26 +8,58 @@
         <ion-item>
           <label class="item-input">
             <span class="input-label">Username</span>
-            <input type="text" placeholder="" ng-model="vm.data.user.username" required>
+            <input name="username" type="text" placeholder="" ng-model="vm.data.user.username" required ng-maxlength="30">
           </label>
+           <div class="error-container" ng-messages="form.username.$error" ng-hide="!form.username.$dirty">
+              <div class="error" ng-message="required">
+                <i class="ion-information-circled"></i> 
+                  This field is required
+              </div>
+              <div class="error" ng-message="maxlength">
+                <i class="ion-information-circled"></i> 
+                  This field has a maximum length of 30 characters
+              </div>
+            </div>
         </ion-item>
         <ion-item>
           <label class="item-input">
             <span class="input-label">Email</span>
-            <input type="text" placeholder="" ng-model="vm.data.user.email" required>
+            <input name="email" type="text" placeholder="" ng-model="vm.data.user.email" required>
           </label>
+          <div class="error-container" ng-messages="form.email.$error" ng-hide="!form.email.$dirty">
+              <div class="error" ng-message="required">
+                <i class="ion-information-circled"></i> 
+                  This field is required
+              </div>
+            </div>
         </ion-item>
         <ion-item>
           <label class="item-input">
             <span class="input-label">Password</span>
-            <input type="password" placeholder="" ng-model="vm.data.user.password" required>
+            <input name="password" type="password" placeholder="" ng-model="vm.data.user.password" required>
           </label>
+          <div class="error-container" ng-messages="form.password.$error" ng-hide="!form.password.$dirty">
+              <div class="error" ng-message="required">
+                <i class="ion-information-circled"></i> 
+                  This field is required
+              </div>
+              <div class="error" ng-show="vm.data.user.password !== vm.confirmPassword">
+                <i class="ion-information-circled"></i> 
+                  Password and Confirm Password must be the same
+              </div>
+            </div>
         </ion-item>
          <ion-item>
           <label class="item-input">
             <span class="input-label">Confirm Password</span>
-            <input type="password" placeholder="" ng-model="vm.confirmPassword" required>
+            <input name="confirmPassword" type="password" placeholder="" ng-model="vm.confirmPassword" required>
           </label>
+          <div class="error-container" ng-messages="form.confirmPassword.$error" ng-hide="!form.confirmPassword.$dirty">
+              <div class="error" ng-message="required">
+                <i class="ion-information-circled"></i> 
+                  This field is required
+              </div>
+            </div>
         </ion-item>
       </ion-list>
       <button type="submit" class="button button-positive button-full" ng-disabled="form.$invalid" ng-click="vm.signUp(vm.data)" >Sign up</button>

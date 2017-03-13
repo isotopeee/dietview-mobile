@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.routes','app.directives', 'ngResource', 'lbServices',  'app.interceptors', 'app.services'])
+angular.module('app', ['ionic', 'ngMessages', 'app.controllers', 'app.routes','app.directives', 'ngResource', 'lbServices',  'app.interceptors', 'app.services'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);

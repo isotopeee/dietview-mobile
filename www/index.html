@@ -47,11 +47,48 @@
         list-style-type: decimal;
         padding-left:40px;
       }
+
+      .error-container {
+  margin: 5px 0;
+}
+
+.error-container:last-child {
+    margin: 5px 0 0;
+}
+
+.error {
+  padding: 10px 16px;
+  /*font-family: "Arial Black", sans-serif;*/
+  font-size: 14px;
+  /*text-transform: uppercase;*/
+  font-weight: normal;
+  color: red;
+  vertical-align: middle;
+}
+
+.error i {
+  font-size: 24px;
+  color: #B83E2C;  
+  vertical-align: middle;
+}
+
+.last-error-container > .error {
+  padding: 10px 16px 0;
+}
+
+.has-errors {
+  border-bottom: 3px solid #B83E2C;
+}
+
+.no-errors {
+  border-bottom: 3px solid green;
+}
     </style>
 
     <script src="js/app.js"></script>
 
     <script src="lib/ionic/js/angular/angular-resource.js"></script>
+    <script src="lib/angular-messages/angular-messages.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/routes.js"></script>
@@ -59,6 +96,7 @@
     <script src="lib/lb-services.js"></script>
     <script src="js/services/services.js"></script>
     <script src="js/services/signupService.js"></script>
+    <script src="js/services/loginService.js"></script>
     <script src="js/services/bmiService.js"></script>
     <script src="js/services/fooBuService.js"></script>
     <script src="js/services/loadingService.js"></script>    

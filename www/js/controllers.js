@@ -67,7 +67,6 @@ function ($scope, $stateParams, $state, User, $ionicHistory) {
                 disableBack: true,
                 historyRoot: true
             });
-            console.log($ionicHistory.viewHistory());
             $state.go('login');
         }, function(err){
             console.log('Stacktrace ' + JSON.stringify(err));
@@ -76,23 +75,20 @@ function ($scope, $stateParams, $state, User, $ionicHistory) {
 
 }])
    
-.controller('loginCtrl', ['$scope', '$stateParams', '$state', 'User', 'facebookPluginService', 'signupService',
-function ($scope, $stateParams, $state, User, facebookPluginService, signupService) {
+.controller('loginCtrl', ['$scope', '$stateParams', '$state', 'User', 'facebookPluginService', 'signupService', 'loadingService', 'loginService',
+function ($scope, $stateParams, $state, User, facebookPluginService, signupService, loadingService, loginService) {
     var vm = this;
     vm.profile = {};
     vm.login = login;
     vm.loginFacebook = loginFacebook;
 
     function login(profile){
-        
-        profile.realm = 'dietview';
-        User.login({rememberMe: true}, profile).$promise.then(function(value, responseHeaders){
-            console.log(value);
+
+        loginService.login(profile).then(function(value){
             clearForm();
             $state.go('tabsController.dietetics');
         }).catch(function(err){
-            alert('Invalid username/password.');
-            console.log('Stacktrace: ' + JSON.stringify(err));
+            loadingService.errorNotify(err, 5000);
         });
     }
 
@@ -102,117 +98,47 @@ function ($scope, $stateParams, $state, User, facebookPluginService, signupServi
 
     function loginFacebook(){
 
-        // User.deleteById({
-        //     id: '228da7b8e0a59223959c206cd9bbf517'
-        // }).$promise.then((value, responseHeaders) => {
-        //     console.log(value, responseHeaders);
-        // });
+        facebookPluginService.createUserAccount(function(data){
+            signupService.signUp(data).then(function(value){
+                    vm.login(data.user);
+                }).catch(function(err){
+                    //Handle existing user here
 
-        // facebookPluginService.login(function(login){
-        //     var accessToken = login.authResponse.accessToken,
-        //         userID = login.authResponse.userID;
-        //     facebookPluginService.getUserProfile(function(userProfile){
-        //         console.log(userProfile);
-        //         var data = {
-        //             user: {
-        //                 email: 'johnmichaelubas.santos@benilde.edu.ph', //userProfile.email
-        //                 username: [userProfile.first_name, userProfile.last_name].join(''),
-        //                 password: userID,
-        //                 account: {
-        //                     profile: {
-        //                         firstname: userProfile.first_name,
-        //                         lastname: userProfile.last_name,
-        //                         gender: userProfile.gender
-        //                     }
-        //                 }
-        //             }
-        //         };
-        //         data.user.account.social = {
-        //             facebook: {
-        //                 profile: data.user.account.profile,
-        //                 accessToken: accessToken
-        //             }
-        //         };
-
-        //         signupService.signUp(data).then(function(value){
-        //             console.log(value);
-
-        //             vm.login(data.user);
-
-        //         }).catch(function(err){
-        //             //Handle existing user here
-        //             // console.log(err);
-        //             User.findOne({
-        //                 filter: {
-        //                     where: {
-        //                         email: data.user.email
-        //                     }
-        //                 }
-        //             }).$promise.then(function(value, responseHeaders){
-        //                 if(!value.hasOwnProperty('error')){
-        //                     //Record is really existing
-        //                     if(value.account.hasOwnProperty('social')){
-        //                         if(value.account.social.hasOwnProperty('facebook')){
-        //                             vm.login(data.user);
-        //                         }else{
-        //                             throw new Error('Invalid Login by Facebook');
-        //                         }
-        //                     }
-        //                 }
-        //             });
-        //         });
-        //         // signupService.signUp(data, function(value, responseHeaders){
-        //         //     if(value.hasOwnProperty('error')){
-        //         //         if(value.error.status === 422 || value.error.statusCode === 422){
-        //         //             //Record existing
-        //         //             //Get user's record
-        //         //             //Check if fb property is existing
-        //         //             if(data.user.account.hasOwnProperty('social')){
-        //         //                 if(data.user.account.social.hasOwnProperty('facebook')){
-        //         //                     //Continue to login
-        //         //                     vm.login(data.user);
-        //         //                 }else{
-        //         //                     throw new Error('Login by Facebook: Invalid login');
-        //         //                 }
-        //         //             }
-        //         //         }
-        //         //     }else{
-        //         //         data.user.account = {
-        //         //             social: {
-        //         //                 facebook: {
-        //         //                     profile: data.user.account.profile,
-        //         //                     accessToken: accessToken
-        //         //                 }
-        //         //             }
-        //         //         };
-        //         //         vm.login(data.user);
-        //         //     }
-        //         // });
-        //     });
-        // });
+                    facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
+                        .then(function(hasFbProp){
+                            if(hasFbProp)
+                                vm.login(data.user);
+                            else
+                                loadingService.errorNotify(err, 5000);
+                        });
+                });
+        });
     }
-
 }])
    
-.controller('signupCtrl', ['$scope', '$stateParams', '$state', 'signupService',
-function ($scope, $stateParams, $state, signupService) {
+.controller('signupCtrl', ['$scope', '$stateParams', '$state', 'signupService', 'loadingService',
+function ($scope, $stateParams, $state, signupService, loadingService) {
     var vm = this;
     vm.data = {};
     vm.signUp = signUp;
+    vm.confirmPassword = '';
+    vm.checkPassword = checkPassword;
 
     function signUp(data){
 
-        if(confirmPassword(data.user.password, vm.confirmPassword)){
-            signupService.signUp(data, function(value, responseHeaders){
-                console.log(value);
+        if(checkPassword(data.user.password, vm.confirmPassword)){
+            signupService.signUp(data).then(function(value){
                 clearForm();
+                loadingService.successNotify('Successfully created! Please verify your email.', 5000);
+            }).catch(function(err){
+                loadingService.errorNotify(err, 5000);
             });
         }else{
             alert('Please make sure your password and confirm password is the same!');
         }
     }
 
-    function confirmPassword(password, confirmPassword){
+    function checkPassword(password, confirmPassword){
         return password === confirmPassword? true : false;
     }
 
@@ -222,7 +148,8 @@ function ($scope, $stateParams, $state, signupService) {
     }
 }])
 
-.controller('profileCtrl', ['$scope', '$stateParams', 'User', 'bmiService', function($scope, $stateParams, User, bmiService){
+.controller('profileCtrl', ['$scope', '$stateParams', 'User', 'bmiService', 'loadingService',
+function($scope, $stateParams, User, bmiService, loadingService){
     var vm = this;
     vm.data = {};
     vm.saveChanges = saveChanges;
@@ -248,6 +175,7 @@ function ($scope, $stateParams, $state, signupService) {
         console.log(data);
         User.prototype$updateAttributes(data).$promise.then(function(value, responseHeaders){
             console.log(value);
+            loadingService.successNotify('Successfully updated!');
         }, function(err){
             console.log(err);
         })

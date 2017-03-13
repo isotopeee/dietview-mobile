@@ -1,4 +1,12 @@
-## Version 0.2'
+## Version 0.3
+    - Added success/error notify using loadingService in every action
+    - Login thru facebook is now up
+    - Added validation and designs in sign up page
+    - Encapsulated login to a service
+    - Error handling 
+    - Added ngMessages support
+
+## Version 0.2
     - Profile management
         - Can now update profile
         - Implemented getCurrent instead of conditioning with getCachedCurrent to avoid cache problem
