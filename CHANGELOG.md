@@ -1,3 +1,10 @@
+## Version 0.4
+    - Added Vital Tracker but calculated locally. Cannot get request on the server
+    - Centralized exercise levels thru .json
+    - Added modal service
+    - Added popup service
+    - Added http service
+
 ## Version 0.3
     - Added success/error notify using loadingService in every action
     - Login thru facebook is now up

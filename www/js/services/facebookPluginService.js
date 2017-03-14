@@ -2,7 +2,7 @@ angular
     .module('app.services')
     .service('facebookPluginService', facebookPluginService);
 
-function facebookPluginService(platformService){
+function facebookPluginService(platformService, User){
     var vm = this;
     vm.login = login;
     vm.getProfilePicture = getProfilePicture;
@@ -122,4 +122,4 @@ function facebookPluginService(platformService){
     }
 }
 
-facebookPluginService.$inject = ['platformService'];
+facebookPluginService.$inject = ['platformService', 'User'];

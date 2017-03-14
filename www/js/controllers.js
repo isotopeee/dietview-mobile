@@ -28,6 +28,36 @@ function ($scope, $stateParams) {
 function ($scope, $stateParams) {
 
 }])
+
+.controller('vitalTrackerCtrl', ['$scope', '$stateParams', 'vitalTrackerService', 'popupService',
+function($scope, $stateParams, vitalTrackerService, popupService){
+    var vm = this;
+    vm.data = {};
+    vm.exerciseLevels = [];
+    vm.loadExerciseLevel = loadExerciseLevel;
+    vm.calculate = calculate;
+
+    loadExerciseLevel();
+
+    function loadExerciseLevel(){
+        vitalTrackerService.getExerciseLevel().then(function(data){
+            vm.exerciseLevels = data;
+        });
+    }
+
+    function calculate(data){
+        console.log(data);
+        var res = vitalTrackerService.calculate(data);
+        console.log(res);
+        var message = ['<b>' +  res + '</b>', ' calories/day to maintain.'].join('');
+        popupService.alertPopup('Total Calories Including Exercise', message);
+    }
+
+    function clearForm(){
+        vm.data = {};
+    }
+    
+}])
    
 .controller('foodBuddyCtrl', ['$scope', '$stateParams', 'MealPlan', 'User',
 function ($scope, $stateParams, MealPlan, User) {
@@ -97,6 +127,25 @@ function ($scope, $stateParams, $state, User, facebookPluginService, signupServi
     }
 
     function loginFacebook(){
+
+        // facebookPluginService.createUserAccount(function(data){
+        //     facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
+        //         .then(function(hasFbProp){
+        //             if(hasFbProp){
+        //                 vm.login(data.user);
+        //             }
+        //             else{
+        //                 signupService.signUp(data).then(function(value){
+        //                     vm.login(data.user);
+        //                 });
+        //             }
+
+        //         })
+        //         .catch(function(err){
+        //             loadingService.errorNotify(err, 5000);
+        //         });
+        // });
+
 
         facebookPluginService.createUserAccount(function(data){
             signupService.signUp(data).then(function(value){

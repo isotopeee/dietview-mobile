@@ -2,6 +2,10 @@
   "name": "ionic-project",
   "version": "1.1.1",
   "description": "An Ionic project",
+  "scripts": {
+    "start": "ionic serve",
+    "build-android": "ionic run android"
+  },
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",

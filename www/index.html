@@ -18,72 +18,8 @@
 
     
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    
-
-    <style type="text/css">
-      .platform-ios .manual-ios-statusbar-padding{
-        padding-top:20px;
-      }
-      .manual-remove-top-padding{
-        padding-top:0px; 
-      }
-      .manual-remove-top-padding .scroll{
-        padding-top:0px !important;
-      }
-      ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
-        margin-left:-10px;
-        margin-right:-10px;
-      }
-      ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
-        border-radius:0px;
-        border-left:0px;
-        border-right: 0px;
-      }
-      .show-list-numbers-and-dots ul{
-        list-style-type: disc;
-        padding-left:40px;
-      }
-      .show-list-numbers-and-dots ol{
-        list-style-type: decimal;
-        padding-left:40px;
-      }
-
-      .error-container {
-  margin: 5px 0;
-}
-
-.error-container:last-child {
-    margin: 5px 0 0;
-}
-
-.error {
-  padding: 10px 16px;
-  /*font-family: "Arial Black", sans-serif;*/
-  font-size: 14px;
-  /*text-transform: uppercase;*/
-  font-weight: normal;
-  color: red;
-  vertical-align: middle;
-}
-
-.error i {
-  font-size: 24px;
-  color: #B83E2C;  
-  vertical-align: middle;
-}
-
-.last-error-container > .error {
-  padding: 10px 16px 0;
-}
-
-.has-errors {
-  border-bottom: 3px solid #B83E2C;
-}
-
-.no-errors {
-  border-bottom: 3px solid green;
-}
-    </style>
+    <link href="css/defaults.css" rel="stylesheet">
+    <link href="css/errors.css" rel="stylesheet">
 
     <script src="js/app.js"></script>
 
@@ -95,10 +31,16 @@
 
     <script src="lib/lb-services.js"></script>
     <script src="js/services/services.js"></script>
+    <script src="js/services/httpService.js"></script>
+    <script src="js/services/popupService.js"></script>
+    <script src="js/services/modalService.js"></script>
+
     <script src="js/services/signupService.js"></script>
     <script src="js/services/loginService.js"></script>
     <script src="js/services/bmiService.js"></script>
     <script src="js/services/fooBuService.js"></script>
+    <script src="js/services/vitalTrackerService.js"></script>
+
     <script src="js/services/loadingService.js"></script>    
     <script src="js/services/platformService.js"></script>
     <script src="js/services/facebookPluginService.js"></script>
@@ -133,6 +75,8 @@
             <i class="icon ion-android-add-circle"></i>Subscriptions</ion-item>
           <ion-item class="item-icon-left" id="menu-list-item34" ui-sref="messaging" menu-close="" data-componentid="list-item34">
             <i class="icon ion-android-mail"></i>Messages</ion-item>
+          <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="vitalTracker" menu-close="" data-componentid="list-item33">
+            <i class="icon ion-calculator"></i>Vital Tracker</ion-item>
           <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="profileTabs.profile" menu-close="" data-componentid="list-item33">
             <i class="icon ion-person"></i>My Profile</ion-item>
           <ion-item class="item-icon-left" id="menu-list-item33" ui-sref="settings" menu-close="" data-componentid="list-item33">
@@ -146,3 +90,4 @@
 </div>
   </body>
 </html>
+

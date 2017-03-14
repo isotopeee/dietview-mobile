@@ -19,8 +19,11 @@ module.exports = function(config) {
       'node_modules/angular-mocks/angular-mocks.js',
       'www/js/app.js',
       'www/js/services/services.js',
-      'www/js/services/bmiService.js',
-      'test/bmiServiceTest.js'
+      'www/js/services/httpService.js',
+      // 'www/js/services/bmiService.js',
+      'www/js/services/vitalTrackerService.js',
+      // 'test/bmiServiceTest.js',
+      'test/vitalTrackerServiceTest.js'
     ],
 
 

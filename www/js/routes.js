@@ -75,6 +75,14 @@ angular.module('app.routes', [])
     controller: 'settingsCtrl'
   })
 
+  .state('vitalTracker', {
+    url: '/vitalTracker',
+    public: false,
+    templateUrl: 'templates/vitalTracker.html',
+    controller: 'vitalTrackerCtrl',
+    controllerAs: 'vm'
+  })
+
    .state('profileTabs', {
     url: '/profileTabs',
     public: false,

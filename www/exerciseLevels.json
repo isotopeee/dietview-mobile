@@ -1,0 +1,40 @@
+{
+    "levels": [
+        {
+            "level": "Basal Metabolic Rate",
+            "value": 1.0
+        },
+        {
+            "level": "Little/no exercise",
+            "value": 1.2
+        },
+        {
+            "level": "3 times/week",
+            "value": 1.375
+        },
+        {
+            "level": "4 times/week",
+            "value": 1.4187
+        },
+        {
+            "level": "5 times/week",
+            "value": 1.4625
+        },
+        {
+            "level": "Daily",
+            "value": 1.550
+        },
+        {
+            "level": "5 times/week (intense)",
+            "value": 1.6375
+        },
+        {
+            "level": "Daily (intense) or twice daily",
+            "value": 1.725
+        },
+        {
+            "level": "Daily exercise + physical job",
+            "value": 1.9
+        }
+    ]
+}
