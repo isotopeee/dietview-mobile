@@ -7,7 +7,9 @@ function loadingInterceptor($injector){
     return {
         request: function(config){
             var loadingService = $injector.get('loadingService');
-            loadingService.showLoading({});
+            if(!config.url.includes('bot')){
+                loadingService.showLoading({});
+            }
             return config;
         },
         requestError: function(config){

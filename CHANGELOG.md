@@ -1,3 +1,12 @@
+# Version 0.5
+    - Implemented Chat Bot
+    - Implemented Meal Planner Utility
+    - Customized loadingService not blocking in Chat Bot
+    - Fixed Vital Tracker calculating via server
+    - Added ActionSheet service
+    - Added animate.css bower 
+
+
 ## Version 0.4
     - Added Vital Tracker but calculated locally. Cannot get request on the server
     - Centralized exercise levels thru .json

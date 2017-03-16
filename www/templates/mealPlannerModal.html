@@ -1,0 +1,22 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Meal Planner - Selected Items</h1>
+        <button class="button button-icon icon ion-close" ng-click="vm.modalService.hideModal();"></button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-divider">
+                Total Calories: <span>{{vm.selectedMeals.totalCalories}} cal</span>
+            </ion-item>
+            <ion-item ng-repeat="meal in vm.selectedMeals.meals | orderBy: meal.calories">
+                <label class="item-input">
+                    <span class="input-label">{{$index + 1}}. {{meal.name}}</span>
+                    <span class="input-label">{{meal.type}}</span>
+                    <span class="input-label" class="selectedMealCalories">{{meal.calories}} cal</span>
+                    <ion-option-button class="button-assertive ion-trash-b" ng-click="vm.removeSelectedIngredient(meal)">
+                    </ion-option-button>
+                </label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>

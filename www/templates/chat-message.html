@@ -1,0 +1,37 @@
+<div ng-if="type === 'friend'"> 
+    <div class="row">
+        <div class="col col-10">
+            <div class="avatar-container">
+                <div class="avatar-friend">
+                    <img class="avatar" src="img/bankee.png">
+                </div>
+            </div>
+        </div>
+        <div class="col col-90">
+            <div class="detail-friend">
+                <div class="message-friend">
+                    <span>{{message}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="type === 'me'">
+    <div class="row">
+        <div class="col col-90">
+            <div class="detail-me">
+                <div class="message-me">
+                    <span>{{message}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col col-10">
+            <div class="avatar-container">
+                <div class="avatar-me">
+                    <img class="avatar" src="img/me.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,10 +6,11 @@ angular
         var vm = this;
         vm.getRequest = getRequest;
 
-        function getRequest(url){
+        function getRequest(url, data){
             var config = {
                 url: url || '',
-                method: 'GET'
+                method: 'GET',
+                data: data
             };
 
             return $http(config).then(function(data){

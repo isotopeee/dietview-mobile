@@ -6,9 +6,46 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('chatBotCtrl', ['$scope', '$stateParams',
-function ($scope, $stateParams) {
+.controller('chatBotCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate', 'chatbotService', 'User',
+function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User) {
+    var vm = this;
+    vm.toggleChat = toggleChat;
+    vm.isChatEnable = false;
+    vm.sendMessage = sendMessage;
+    vm.chatbotService = chatbotService;
+    vm.isLoading = false;
+    vm.user = {};
 
+    getUserProfile();
+
+    function sendMessage(type, message){
+       
+        vm.message = '';
+        vm.isLoading = true;
+        chatbotService.sendMessage(type, message)
+            .then(function(botMessage){
+                var message_object = {
+                    timestamp: new Date(),
+                    type: 'friend',
+                    message: botMessage
+                };
+                vm.isLoading = false;
+                chatbotService.messages.push(message_object);
+            });
+        $ionicScrollDelegate.resize();
+        $ionicScrollDelegate.scrollBottom(true);
+    }
+
+    function toggleChat(){
+        vm.isChatEnable = !vm.isChatEnable;
+    }
+
+    function getUserProfile(){
+        User.getCurrent().$promise.then(function(value, responseHeaders){
+            vm.user = value;
+            vm.isChatEnable = true;
+        });
+    }
 
 }])
    
@@ -47,16 +84,110 @@ function($scope, $stateParams, vitalTrackerService, popupService){
 
     function calculate(data){
         console.log(data);
-        var res = vitalTrackerService.calculate(data);
-        console.log(res);
-        var message = ['<b>' +  res + '</b>', ' calories/day to maintain.'].join('');
-        popupService.alertPopup('Total Calories Including Exercise', message);
+        data.exerciseLevel = JSON.parse(data.exerciseLevel);
+        var exerciseLevel = data.exerciseLevel.level; //Get copy
+        data.exerciseLevel = data.exerciseLevel.value;
+        vitalTrackerService.calculate(data).then(function(eer){
+            var message = [
+                '<p> Age: ' + data.age + '</p>', 
+                '<p> Gender: ' + data.gender + '</p>',
+                '<p> Height: ' + [data.height.feet, data.height.inches].join('\'') + '</p>',
+                '<p> Weight: ' + vm.data.weight + '</p>',
+                '<p> Exercise Level: ' + exerciseLevel + '</p>',
+                '<b>' +  eer + '</b>', ' calories/day to maintain.'
+                ].join('');
+            popupService.alertPopup('Total Calories Including Exercise', message);
+            clearForm();    
+        });
     }
 
     function clearForm(){
         vm.data = {};
     }
     
+}])
+
+.controller('mealPlannerCtrl', ['$scope', '$stateParams', 'MealItem', 
+    'actionSheetService', '$ionicScrollDelegate', 'modalService', 'loadingService',
+function($scope, $stateParams, MealItem, actionSheetService, $ionicScrollDelegate, modalService, loadingService){
+    var vm = this;
+    vm.data = {};    
+    vm.meals = [];
+    vm.types = [];
+    vm.selectedMeals = {
+        meals: [],
+        totalCalories: 0
+    };
+    vm.totalSelected = 0;
+    vm.foodType = 'dairy';
+    vm.openActionSheet = openActionSheet;
+    vm.modalService = modalService;
+    vm.onToggleIngredient = onToggleIngredient;
+    vm.viewSelectedItems = viewSelectedItems;
+    vm.removeSelectedIngredient = removeSelectedIngredient;
+
+    loadIngredients();
+
+    function loadIngredients(){
+        MealItem.find({}).$promise.then(function(value, responseHeaders){
+            vm.meals = value;
+            getIngredientTypes(vm.meals);
+        });
+    }
+
+    function getIngredientTypes(meals){
+        for(var i = 0; i <= meals.length - 1; i++){
+            if(meals[i].hasOwnProperty('type')){
+                if(!vm.types.includes(meals[i].type)){
+                    vm.types.push(meals[i].type);
+                }
+            }
+        }
+    }
+
+    function openActionSheet(){
+        var buttons = [
+            { text: '<i class="icon ion-arrow-up-c"></i> Scroll Top'},
+            { text: '<i class="icon ion-bag"></i> View Selected Items'}
+        ];
+        actionSheetService.showActionSheet(buttons, 'Meal Planner', '', 'Cancel', 
+        function cancel(){
+            // Cancel callback    
+        }, function buttonClicked(index){
+            switch(index){
+                case 0: 
+                    $ionicScrollDelegate.scrollTop(true);
+                    break;
+                case 1:
+                    viewSelectedItems();
+                    break;
+            }
+        });
+    }
+
+    function viewSelectedItems(){
+        modalService.showModal($scope, 'templates/mealPlannerModal.html');
+    }
+
+    function onToggleIngredient(selectedMealID, selectedMeal){
+        selectedMealID ? addSelectedIngredient(selectedMeal) : removeSelectedIngredient(selectedMeal);
+    }
+
+    function addSelectedIngredient(selectedMeal){
+        vm.selectedMeals.meals.push(selectedMeal);
+        vm.selectedMeals.totalCalories += selectedMeal.calories;
+    }
+
+    function removeSelectedIngredient(selectedMeal){
+        vm.selectedMeals.meals = vm.selectedMeals.meals.filter(function(meal){
+            if(meal.id === selectedMeal.id){
+                vm.selectedMeals.totalCalories -= selectedMeal.calories;
+                vm.data.selectedMeal[meal.id] = false;
+                return false;
+            }
+            return true;
+        });
+    }
 }])
    
 .controller('foodBuddyCtrl', ['$scope', '$stateParams', 'MealPlan', 'User',

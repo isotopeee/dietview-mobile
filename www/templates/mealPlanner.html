@@ -1,0 +1,32 @@
+<ion-view title="Meal Planner">
+    <div class="bar bar-subheader">
+        <button class="animated button button-icon icon ion-android-restaurant" 
+        ng-class="{'bounce': vm.onToggle}" ng-click="vm.viewSelectedItems();"></button>
+        <span>{{vm.selectedMeals.meals.length}}</span>
+        <h2 class="title">  </h2>
+        <button class="button button-icon icon ion-ios-gear" ng-click="vm.openActionSheet()"></button>
+   </div>
+  <ion-content padding="true" class="has-header has-subheader"> 
+    <div class="list list-inset">
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="vm.mealFilter" placeholder="Search">
+        </label>
+        <label class="item-input item-select">
+            <span class="input-label">Food Type</span>
+            <select id="foodType" ng-model="vm.foodType" required>
+                <option ng-repeat="type in vm.types | orderBy: type" ng-value="type">{{type}}</option>
+            </select>
+        </label>
+    </div>
+
+    <ion-item ng-repeat="meal in vm.meals | filter: vm.mealFilter | filter: vm.foodType | orderBy: 'name'">
+        <ion-checkbox ng-model="vm.data.selectedMeal[meal.id]" ng-value="meal" 
+            ng-change="vm.onToggleIngredient(vm.data.selectedMeal[meal.id], meal)">
+            <p><b>{{meal.name}}</b></p> 
+            <p>{{meal.description}}</p>
+            <p>{{meal.calories}} cal</p>
+        </ion-checkbox>
+    </ion-item>
+  </ion-content>
+</ion-view>

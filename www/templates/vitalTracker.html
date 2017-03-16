@@ -42,8 +42,8 @@
             <ion-item>
                 <label class="item-input item-select">
                     <span class="input-label">Exercise Level</span>
-                    <select id="heightInc" ng-model="vm.data.exerciseLevel" required>
-                        <option ng-repeat="eLevel in vm.exerciseLevels" ng-value="eLevel.value">{{eLevel.level}}</option>
+                    <select id="eLevel" ng-model="vm.data.exerciseLevel" required>
+                        <option ng-repeat="eLevel in vm.exerciseLevels" value="{{eLevel}}">{{eLevel.level}}</option>
                     </select>
                 </label>
             </ion-item>

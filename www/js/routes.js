@@ -15,7 +15,8 @@ angular.module('app.routes', [])
     views: {
       'tab3': {
         templateUrl: 'templates/dietetics.html',
-        controller: 'dieteticsCtrl'
+        controller: 'dieteticsCtrl',
+        controllerAs: 'vm'
       }
     }
   })
@@ -26,7 +27,8 @@ angular.module('app.routes', [])
     views: {
       'tab5': {
         templateUrl: 'templates/chatBot.html',
-        controller: 'chatBotCtrl'
+        controller: 'chatBotCtrl',
+        controllerAs: 'vm'
       }
     }
   })
@@ -37,7 +39,8 @@ angular.module('app.routes', [])
     views: {
       'tab4': {
         templateUrl: 'templates/diView.html',
-        controller: 'diViewCtrl'
+        controller: 'diViewCtrl',
+        controllerAs: 'vm'
       }
     }
   })
@@ -46,14 +49,16 @@ angular.module('app.routes', [])
     url: '/page7',
     public: false,
     templateUrl: 'templates/messaging.html',
-    controller: 'messagingCtrl'
+    controller: 'messagingCtrl',
+    controllerAs: 'vm'
   })
 
   .state('subscriptions', {
     url: '/tabs/subscriptions',
     public: false,
     templateUrl: 'templates/subscriptions.html',
-    controller: 'subscriptionsCtrl'
+    controller: 'subscriptionsCtrl',
+    controllerAs: 'vm'
   })
 
   .state('tabsController.foodBuddy', {
@@ -72,7 +77,8 @@ angular.module('app.routes', [])
     url: '/page10',
     public: false,
     templateUrl: 'templates/settings.html',
-    controller: 'settingsCtrl'
+    controller: 'settingsCtrl',
+    controllerAs: 'vm'
   })
 
   .state('vitalTracker', {
@@ -80,6 +86,14 @@ angular.module('app.routes', [])
     public: false,
     templateUrl: 'templates/vitalTracker.html',
     controller: 'vitalTrackerCtrl',
+    controllerAs: 'vm'
+  })
+
+  .state('mealPlanner', {
+    url: '/mealPlanner',
+    public: false,
+    templateUrl: 'templates/mealPlanner.html',
+    controller: 'mealPlannerCtrl',
     controllerAs: 'vm'
   })
 

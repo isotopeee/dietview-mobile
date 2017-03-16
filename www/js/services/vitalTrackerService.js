@@ -16,16 +16,13 @@ angular
                         data.height.feet = Number.parseInt(data.height.feet);
                         data.height.inches = Number.parseInt(data.height.inches);
                         
-                        return localCalculate(data);
+                         return VitalTracker.eer(data).$promise.then(function(data){
+                                return data.eer;
+                            });
                     }
                 }else{
                     throw new Error('VitalTrackerService: Missing some properties', data);
                 }
-
-            // VitalTracker.eer(data).$promise.then(function(data){
-            //     console.log(data);
-            // });
-            
         }
 
         function getExerciseLevel(){

@@ -1,8 +1,29 @@
 <ion-view title="Chat Bot" id="page9">
-  <ion-content padding="true" class="has-header">
-    <div>
-      <img src="img/ujjRPk1SFinT7DivB7gC_robot-face.png" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+  <div ng-show="vm.isChatEnable">
+    <div class="bar bar-subheader">
+        <h2 class="title">Sub Header</h2>
     </div>
-    <a href-inappbrowser="page5" id="chatBot-button10" class="button button-positive  button-block">Chat me!</a>
-  </ion-content>
+    <ion-content class="has-subheader has-footer">
+          <div id="chatbotContainer" class="container">
+
+              <chat-message type="friend" message="Hi {{vm.user.account.profile.firstname}}, 
+                my name is {{vm.chatbotService.chatbotName}}. How can I help you?"></chat-message>
+              
+              <div ng-repeat="message in vm.chatbotService.messages | orderBy: 'message.timestamp'">
+                  <chat-message type="{{message.type}}" message="{{message.message}}"></chat-message> 
+                   
+              </div>
+              <chat-message type="friend" message="" ng-show="vm.isLoading"></chat-message>
+              
+          </div>
+      </ion-content>
+      <form>
+          <div class="bar bar-footer item-input-inset">
+              <label class="item-input-wrapper" style="background: none">
+                  <input type="text" ng-model="vm.message" placeholder="Write a message...">
+              </label>
+              <button class="button button-icon icon ion-android-send" type="submit" ng-click="vm.sendMessage('me', vm.message)"></button>
+          </div>
+      </form>
+  </div>
 </ion-view>

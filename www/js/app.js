@@ -1,12 +1,17 @@
-angular.module('app', ['ionic', 'ngMessages', 'app.controllers', 'app.routes','app.directives', 'ngResource', 'lbServices',  'app.interceptors', 'app.services'])
+angular.module('app', [
+  'ionic', 'ngMessages', 'app.controllers', 
+  'app.routes','app.directives', 'ngResource', 
+  'lbServices',  'app.interceptors', 'app.services'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 })
 
 .config(function(LoopBackResourceProvider){
-  LoopBackResourceProvider.setUrlBase('https://dietview-api.mybluemix.net/api');
+  var urlBase = 'https://dietview-api.mybluemix.net/api';
+  LoopBackResourceProvider.setUrlBase(urlBase);
   // LoopBackResourceProvider.setUrlBase('http://192.168.137.239:3000/api');
+  window.localStorage.setItem('UrlBase', urlBase);
 })
 
 .config(function($httpProvider){
