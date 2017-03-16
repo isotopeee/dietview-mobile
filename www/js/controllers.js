@@ -65,10 +65,33 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
 
 }])
    
-.controller('diViewCtrl', ['$scope', '$stateParams',
-function ($scope, $stateParams) {
+.controller('diViewCtrl', ['$scope', '$stateParams', 'MealPlan', 'User', 'subscriptionService', 'modalService',
+function ($scope, $stateParams, MealPlan, User, subscriptionService, modalService) {
+    var vm = this;
+    vm.recommendations = [];
+    vm.loadMealPlans = loadMealPlans;
+    vm.subscribe = subscribe;
+    vm.viewDetails = viewDetails;
+    vm.selectedMealPlan = {};
+    vm.modalService = modalService;
 
+    loadMealPlans();
 
+    function loadMealPlans(){
+        MealPlan.find({}).$promise.then(function(value, responseHeaders){
+            console.log(value);
+            vm.recommendations = value;
+        });
+    }
+
+    function subscribe(mealPlan){
+        subscriptionService.subscribe(mealPlan, new Date());
+    }
+
+    function viewDetails(mealPlan){
+        vm.selectedMealPlan = mealPlan;
+        modalService.showModal($scope, 'templates/foodBuddyModal.html');
+    }
 }])
    
 .controller('messagingCtrl', ['$scope', '$stateParams',
