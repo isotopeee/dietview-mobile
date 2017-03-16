@@ -3,28 +3,29 @@
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search" ng-model="vm.query">
       </label>
     </div>
-    
-    
-    <div class="list card" id="foodBuddy-card29">
-      <ion-item class="item-avatar" id="foodBuddy-list-item67">
-        <h2>Recommendations</h2>
-        <p>by Chef Boy Logro</p>
-      </ion-item>
-      <div class=" item item-image">
-        <img src="img/Q223aHH4Ta5T8sJzWHzQ_f4c405bf47984f5228abfd035674b80e.jpg" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+
+    <div class="list card" ng-repeat="mealPlan in vm.recommendations | filter: vm.query">
+
+      <div class="item item-avatar">
+        <img src="img/chef.png">
+        <h2>{{mealPlan.name}}</h2>
+        <p>{{mealPlan.description}}</p>
+        <p>{{mealPlan.averageCalories}} cal</p>
+        <p>Php {{mealPlan.price}} </p>
       </div>
-      <div class="item item-body" id="foodBuddy-list-item-container16">
-        <div id="foodBuddy-markdown18" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Standar Meal Plan</p>
-        </div>
+
+      <div class="item item-image">
+        <img ng-src="{{mealPlan.image}}" alt="Meal">
       </div>
-      <form id="foodBuddy-form12" class="list">
-        <button id="foodBuddy-button14" class="button button-positive  button-block">Avail</button>
-        <button id="foodBuddy-button15" class="button button-stable  button-block">Or Create Your Own</button>
-      </form>
+       <button class="item item-icon-right assertive" style="float:right" ng-click="vm.subscribe(mealPlan);">
+        <i class="icon ion-play"></i>
+      </button>
+      <button class="item item-icon-right" style="float:right" ng-click="vm.viewDetails(mealPlan);">
+        <i class="icon ion-android-search"></i>
+      </button>
     </div>
   </ion-content>
 </ion-view>

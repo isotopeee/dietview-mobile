@@ -1,0 +1,63 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Food Buddy - Selected Meal Plan</h1>
+        <button class="button button-icon icon ion-close" ng-click="vm.modalService.hideModal();"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list card">
+            <div class="item item-avatar">
+                <img ng-src="vm.selectedMealPlan.img">
+                <h2>{{vm.selectedMealPlan.name}}</h2>
+                <p>{{vm.selectedMealPlan.description}}</p>
+            </div>
+
+            <div class="item item-body">
+                <img class="full-image" ng-src="vm.selectedMealPlan.image">
+                <p> Average Calories: {{vm.selectedMealPlan.averageCalories}} </p>
+                <p> Php {{vm.selectedMealPlan.price}} </p>
+                <p> Type: {{vm.selectedMealPlan.type}} </p>
+                <p> Status: {{vm.selectedMealPlan.status}} </p>
+            </div>
+        </div>
+
+        <div class="list card" ng-repeat="meal in vm.selectedMealPlan.meals">
+
+            <div class="item item-body">
+                <h2>Day {{$index + 1}} </h2>
+            </div>
+
+            <div class="item item-body">
+                <h2> Breakfast </h2>
+                <img class="full-image" ng-src="meal.breakfast.image">
+                <p> Name: {{meal.breakfast.name}} </p>
+                <p> Description: {{meal.breakfast.description}} </p>
+                <p> Calories: {{meal.breakfast.calories}} </p>
+            </div>
+
+            <div class="item item-body">
+                <h2> Lunch </h2>
+                <img class="full-image" ng-src="meal.lunch.image">
+                <p> Name: {{meal.lunch.name}} </p>
+                <p> Description: {{meal.lunch.description}} </p>
+                <p> Calories: {{meal.lunch.calories}} </p>
+            </div>
+
+            <div class="item item-body">
+                <h2> Dinner </h2>
+                <img class="full-image" ng-src="meal.dinner.image">
+                <p> Name: {{meal.dinner.name}} </p>
+                <p> Description: {{meal.dinner.description}} </p>
+                <p> Calories: {{meal.dinner.calories}} </p>
+            </div>
+
+             <div class="item item-body">
+                <h2> Snack </h2>
+                <img class="full-image" ng-src="meal.snack.image">
+                <p> Name: {{meal.snack.name}} </p>
+                <p> Description: {{meal.snack.description}} </p>
+                <p> Calories: {{meal.snack.calories}} </p>
+            </div>
+            
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -5,7 +5,7 @@ angular
     function popupService($ionicPopup){
         var vm = this;
         vm.alertPopup = alertPopup;
-
+        
         function alertPopup(title, text){
             return $ionicPopup.alert({
                 title: title,

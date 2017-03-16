@@ -1,33 +1,20 @@
 <ion-view title="Settings" id="page10">
   <ion-content padding="true" class="has-header">
-    <form id="settings-form10" class="list">
-      <label class="item item-select" id="settings-select1">
-        <span class="input-label">Profile Manager</span>
-        <select>
-          <option>Name</option>
-          <option>Password</option>
-          <option>Username</option>
-          <option>Email</option>
-        </select>
-      </label>
-      <label class="item item-select" id="settings-select2">
-        <span class="input-label">Security</span>
-        <select>
-          <option>Account Recovery</option>
-          <option>Social Media Authentication</option>
-          <option>Email Verification</option>
-          <option>Captcha</option>
-        </select>
-      </label>
-      <label class="item item-select" id="settings-select3">
-        <span class="input-label">Payment</span>
-        <select>
-          <option>Upload Payment Details</option>
-          <option>Online Bank</option>
-          <option>Dragon Pay</option>
-        </select>
-      </label>
-      <a ui-sref="login" id="settings-button11" class="button button-stable  button-block">LOG OUT</a>
+    <form>
+      <ion-list>
+        <ion-item class="item-divider">
+          General
+        </ion-item>
+        <ion-item class="item item-toggle">
+          <span class="input-label">Enable Speech to Text Chat Bot</span>
+          <label class="toggle">
+            <input type="checkbox" ng-model="vm.isTTSEnable" ng-change="vm.enableTTS(vm.isTTSEnable)">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </ion-item>
+      </ion-list>
     </form>
   </ion-content>
 </ion-view>

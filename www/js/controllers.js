@@ -1,13 +1,22 @@
 angular.module('app.controllers', [])
   
-.controller('dieteticsCtrl', ['$scope', '$stateParams',
-function ($scope, $stateParams) {
+.controller('dieteticsCtrl', ['$scope', '$stateParams', 'User',
+function ($scope, $stateParams, User) {
+    var vm = this;
 
+    loadSubscriptions();
+
+    function loadSubscriptions(){
+        var userId = User.getCurrentId();
+        User.subscriptions({id : userId }).$promise.then(function(value, responseHeaders){
+            console.log(value);
+        });
+    }
 
 }])
    
-.controller('chatBotCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate', 'chatbotService', 'User',
-function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User) {
+.controller('chatBotCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate', 'chatbotService', 'User', 'textToSpeechService',
+function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, textToSpeechService) {
     var vm = this;
     vm.toggleChat = toggleChat;
     vm.isChatEnable = false;
@@ -31,6 +40,13 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User) {
                 };
                 vm.isLoading = false;
                 chatbotService.messages.push(message_object);
+                var isTTSEnable = JSON.parse(window.localStorage.getItem('TTS'));
+                if(isTTSEnable){
+                    textToSpeechService.speakText(botMessage, function(){
+                        // Nothing to do
+                    });
+                }
+                
             });
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollBottom(true);
@@ -190,9 +206,16 @@ function($scope, $stateParams, MealItem, actionSheetService, $ionicScrollDelegat
     }
 }])
    
-.controller('foodBuddyCtrl', ['$scope', '$stateParams', 'MealPlan', 'User',
-function ($scope, $stateParams, MealPlan, User) {
+.controller('foodBuddyCtrl', ['$scope', '$stateParams', 'MealPlan', 'subscriptionService', 'User',
+    'modalService',
+function ($scope, $stateParams, MealPlan, subscriptionService, User, modalService) {
     var vm = this;
+    vm.user = {};
+    vm.recommendations = [];
+    vm.subscribe = subscribe;
+    vm.viewDetails = viewDetails;
+    vm.selectedMealPlan = {};
+    vm.modalService = modalService;
 
     loadRecommendations();
 
@@ -202,15 +225,37 @@ function ($scope, $stateParams, MealPlan, User) {
         console.log(userID);
         MealPlan.recommendations({userId : userID}).$promise.then(function(value, responseHeaders){
             console.log(value);
+            vm.recommendations = value.recommendations;
         }).catch(function(err){
             console.log(err);
         });
     } 
+
+    function subscribe(mealPlan){
+        subscriptionService.subscribe(mealPlan, new Date());
+    }
+
+    function viewDetails(mealPlan){
+        vm.selectedMealPlan = mealPlan;
+        modalService.showModal($scope, 'templates/foodBuddyModal.html');
+    }
 }])
    
 .controller('settingsCtrl', ['$scope', '$stateParams',
 function ($scope, $stateParams) {
+    var vm = this;
+    vm.enableTTS = enableTTS;
+    vm.isTTSEnable = false;
 
+    init();
+
+    function init(){
+        vm.isTTSEnable = window.localStorage.getItem('TTS');
+    }
+
+    function enableTTS(status){
+        window.localStorage.setItem('TTS', status);
+    }
 
 }])
       

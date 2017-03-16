@@ -1,3 +1,9 @@
+# Version 0.6
+    - Implemented textToSpeech in Chat Bot
+    - Added an option to toggle on/off textToSpeech
+    - Replaced Dietics with Subscription
+    - Food Buddy can now view and subscribe meal plans
+
 # Version 0.5
     - Implemented Chat Bot
     - Implemented Meal Planner Utility
