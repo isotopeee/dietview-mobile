@@ -17,12 +17,12 @@
               
           </div>
       </ion-content>
-      <form>
+      <form name="name">
           <div class="bar bar-footer item-input-inset">
               <label class="item-input-wrapper" style="background: none">
-                  <input type="text" ng-model="vm.message" placeholder="Write a message...">
+                  <input type="text" ng-model="vm.message" placeholder="Write a message..." required>
               </label>
-              <button class="button button-icon icon ion-android-send" type="submit" ng-click="vm.sendMessage('me', vm.message)"></button>
+              <button class="button button-icon icon ion-android-send" type="submit" ng-disabled="name.$invalid" ng-click="vm.sendMessage('me', vm.message)"></button>
           </div>
       </form>
   </div>

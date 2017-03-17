@@ -1,3 +1,10 @@
+# Version 0.7
+    - Subscription state can now load your list of subscriptions
+    - No Images from the server
+    - Fixed Chat Bot URL
+    - Chat Bot reply even if the server didn't return anything in response
+
+
 # Version 0.6
     - Implemented textToSpeech in Chat Bot
     - Added an option to toggle on/off textToSpeech

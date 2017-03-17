@@ -16,7 +16,8 @@ angular
                 message: message
             };
             vm.messages.push(message_object);
-            return httpService.getRequest(URL, {q : message}).then(function(resp){
+            URL = [URL,'q=' + message].join('?');
+            return httpService.getRequest(URL, {}).then(function(resp){
                 return resp.data;
             });
 

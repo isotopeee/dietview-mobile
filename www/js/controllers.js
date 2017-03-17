@@ -1,16 +1,34 @@
 angular.module('app.controllers', [])
   
-.controller('dieteticsCtrl', ['$scope', '$stateParams', 'User',
-function ($scope, $stateParams, User) {
+.controller('dieteticsCtrl', ['$scope', '$stateParams', 'User', 'Subscription', 'modalService',
+function ($scope, $stateParams, User, Subscription, modalService) {
     var vm = this;
+    vm.subscriptions = [];
+    vm.viewDetails = viewDetails;
+    vm.modalService = modalService;
 
     loadSubscriptions();
 
     function loadSubscriptions(){
         var userId = User.getCurrentId();
-        User.subscriptions({id : userId }).$promise.then(function(value, responseHeaders){
+        // User.subscriptions({id : userId }).$promise.then(function(value, responseHeaders){
+        //     console.log(value);
+        // });
+        Subscription.find({}).$promise.then(function(value, responseHeaders){
+            value = value.filter(function(s){
+                if(s.userId === userId){
+                    return true;
+                }
+                return false;
+            });
+            vm.subscriptions = value;
             console.log(value);
         });
+    }
+
+     function viewDetails(mealPlan){
+        vm.selectedMealPlan = mealPlan;
+        modalService.showModal($scope, 'templates/foodBuddyModal.html');
     }
 
 }])
@@ -33,6 +51,9 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
         vm.isLoading = true;
         chatbotService.sendMessage(type, message)
             .then(function(botMessage){
+                if(botMessage.length === 0){
+                    botMessage = 'Sorry, I didn\'t quite get that';
+                }
                 var message_object = {
                     timestamp: new Date(),
                     type: 'friend',
@@ -82,6 +103,7 @@ function ($scope, $stateParams, MealPlan, User, subscriptionService, modalServic
             console.log(value);
             vm.recommendations = value;
         });
+
     }
 
     function subscribe(mealPlan){
