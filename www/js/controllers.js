@@ -86,8 +86,8 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
 
 }])
    
-.controller('diViewCtrl', ['$scope', '$stateParams', 'MealPlan', 'User', 'subscriptionService', 'modalService',
-function ($scope, $stateParams, MealPlan, User, subscriptionService, modalService) {
+.controller('diViewCtrl', ['$scope', '$stateParams', 'MealPlan', 'User', 'subscriptionService', 'modalService', 'loadingService',
+function ($scope, $stateParams, MealPlan, User, subscriptionService, modalService, loadingService) {
     var vm = this;
     vm.recommendations = [];
     vm.loadMealPlans = loadMealPlans;
@@ -107,7 +107,9 @@ function ($scope, $stateParams, MealPlan, User, subscriptionService, modalServic
     }
 
     function subscribe(mealPlan){
-        subscriptionService.subscribe(mealPlan, new Date());
+        subscriptionService.subscribe(mealPlan, new Date()).then(function(){
+            loadingService.successNotify('Successfully subscribed!', 2000);
+        });
     }
 
     function viewDetails(mealPlan){

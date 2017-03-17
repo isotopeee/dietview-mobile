@@ -25,7 +25,7 @@ angular
                 userId: 0
             };
 
-            getUserProfile().then(function(user){
+            return getUserProfile().then(function(user){
                 data.customer = user;
                 data.userId = user.id;
                 data.endDate = addDays(data.startDate, mealPlan.meals.length);
