@@ -4,7 +4,8 @@
   "description": "An Ionic project",
   "scripts": {
     "start": "ionic serve",
-    "build-android": "ionic run android"
+    "run-android": "ionic run android",
+    "build-android": "ionic build android"
   },
   "dependencies": {
     "gulp": "^3.5.6",
