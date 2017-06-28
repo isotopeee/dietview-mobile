@@ -44,4 +44,5 @@
         <variable name="APP_ID" value="335866886763636" />
         <variable name="APP_NAME" value="Dietview" />
     </plugin>
+    <engine name="android" spec="~6.0.0" />
 </widget>
