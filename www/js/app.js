@@ -1,6 +1,6 @@
 angular.module('app', [
-  'ionic', 'ngMessages', 'app.controllers', 
-  'app.routes','app.directives', 'ngResource', 
+  'ionic', 'ngMessages', 'app.controllers',
+  'app.routes','app.directives', 'ngResource',
   'lbServices',  'app.interceptors', 'app.services'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
@@ -10,7 +10,7 @@ angular.module('app', [
 .config(function(LoopBackResourceProvider){
   var urlBase = 'https://dietview-api.mybluemix.net/api';
   LoopBackResourceProvider.setUrlBase(urlBase);
-  // LoopBackResourceProvider.setUrlBase('http://192.168.137.239:3000/api');
+  //  LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
   window.localStorage.setItem('UrlBase', urlBase);
 })
 
@@ -36,7 +36,7 @@ angular.module('app', [
 })
 
 .run(function($rootScope, $state, User){
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
         if(!User.isAuthenticated()){
           if(!toState.public){
             event.preventDefault();
@@ -52,7 +52,7 @@ angular.module('app', [
 */
 .directive('disableSideMenuDrag', ['$ionicSideMenuDelegate', '$rootScope', function($ionicSideMenuDelegate, $rootScope) {
     return {
-        restrict: "A",  
+        restrict: "A",
         controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
 
             function stopDrag(){
@@ -87,7 +87,7 @@ angular.module('app', [
       attrs.$observe('hrefInappbrowser', function(val){
         href = val;
       });
-      
+
       element.bind('click', function (event) {
 
         window.open(href, '_system', 'location=yes');
