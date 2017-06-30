@@ -167,7 +167,4 @@ angular.module('app.routes', [])
   $urlRouterProvider
     .when('/', '/login')
     .otherwise('/login')
-
-  
-
 });
