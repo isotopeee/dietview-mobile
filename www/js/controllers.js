@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
-  
-.controller('dieteticsCtrl', ['$scope', '$stateParams', 'User', 'Subscription', 'modalService',
-function ($scope, $stateParams, User, Subscription, modalService) {
+
+.controller('dieteticsCtrl', ['$scope', '$stateParams', 'TM_MealMealPlan', 'User', 'Subscription', 'modalService',
+function ($scope, $stateParams, TM_MealMealPlan, User, Subscription, modalService) {
     var vm = this;
     vm.subscriptions = [];
     vm.viewDetails = viewDetails;
@@ -11,10 +11,10 @@ function ($scope, $stateParams, User, Subscription, modalService) {
 
     function loadSubscriptions(){
         var userId = User.getCurrentId();
-        // User.subscriptions({id : userId }).$promise.then(function(value, responseHeaders){
-        //     console.log(value);
-        // });
-        Subscription.find({}).$promise.then(function(value, responseHeaders){
+        var filter = {
+            include: ['mealPlan']
+        }
+        Subscription.find({filter:filter}).$promise.then(function(value, responseHeaders){
             value = value.filter(function(s){
                 if(s.userId === userId){
                     return true;
@@ -27,12 +27,48 @@ function ($scope, $stateParams, User, Subscription, modalService) {
     }
 
      function viewDetails(mealPlan){
-        vm.selectedMealPlan = mealPlan;
-        modalService.showModal($scope, 'templates/foodBuddyModal.html');
+         console.log(mealPlan);
+         var filter = {
+         where: {
+             mealPlanId: mealPlan.id
+         },
+         include: {
+             relation: 'meal',
+         },
+             order: 'day ASC'
+         };
+
+         TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+             mealPlan.meals = _sortMealPlanMeals(data);
+             vm.selectedMealPlan = mealPlan;
+             modalService.showModal($scope, 'templates/foodBuddyModal.html');
+         });
+    }
+
+    function _sortMealPlanMeals(mealPlanMealData) {
+        var mealPlanMeals = [];
+        var mealPlanMeal = null;
+        var lastItem = null;
+        lastItem = mealPlanMealData[mealPlanMealData.length-1];
+
+        for (var i = 0; i < lastItem.day; i++) {
+            mealPlanMeal = {
+                breakfast: null,
+                lunch: null,
+                dinner: null,
+                snack: null
+            };
+            mealPlanMeals.push(mealPlanMeal);
+        }
+        // IDEA: Sort meal plan meals data
+        mealPlanMealData.forEach(function (mealPlanMeal) {
+            mealPlanMeals[mealPlanMeal.day - 1][mealPlanMeal.meal.type] = mealPlanMeal.meal;
+        });
+        return mealPlanMeals;
     }
 
 }])
-   
+
 .controller('chatBotCtrl', ['$scope', '$stateParams', '$ionicScrollDelegate', 'chatbotService', 'User', 'textToSpeechService',
 function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, textToSpeechService) {
     var vm = this;
@@ -46,7 +82,7 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
     getUserProfile();
 
     function sendMessage(type, message){
-       
+
         vm.message = '';
         vm.isLoading = true;
         chatbotService.sendMessage(type, message)
@@ -67,7 +103,7 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
                         // Nothing to do
                     });
                 }
-                
+
             });
         $ionicScrollDelegate.resize();
         $ionicScrollDelegate.scrollBottom(true);
@@ -85,9 +121,9 @@ function ($scope, $stateParams, $ionicScrollDelegate, chatbotService, User, text
     }
 
 }])
-   
-.controller('diViewCtrl', ['$scope', '$stateParams', 'MealPlan', 'User', 'subscriptionService', 'modalService', 'loadingService',
-function ($scope, $stateParams, MealPlan, User, subscriptionService, modalService, loadingService) {
+
+.controller('diViewCtrl', ['$scope', '$stateParams', 'TM_MealMealPlan', 'MealPlan', 'User', 'subscriptionService', 'modalService', 'loadingService',
+function ($scope, $stateParams, TM_MealMealPlan, MealPlan, User, subscriptionService, modalService, loadingService) {
     var vm = this;
     vm.recommendations = [];
     vm.loadMealPlans = loadMealPlans;
@@ -99,31 +135,75 @@ function ($scope, $stateParams, MealPlan, User, subscriptionService, modalServic
     loadMealPlans();
 
     function loadMealPlans(){
-        MealPlan.find({}).$promise.then(function(value, responseHeaders){
-            console.log(value);
-            vm.recommendations = value;
-        });
-
+      MealPlan.find({}).$promise.then(function(value, responseHeaders){
+          console.log(value);
+          vm.recommendations = value;
+      });
     }
 
     function subscribe(mealPlan){
-        subscriptionService.subscribe(mealPlan, new Date()).then(function(){
-            loadingService.successNotify('Successfully subscribed!', 2000);
+        var filter = {
+            where: {
+                mealPlanId: mealPlan.id
+            },
+            include: {
+                relation: 'meal',
+            },
+            order: 'day ASC'
+        };
+        TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+            mealPlan.meals = _sortMealPlanMeals(data);
+            subscriptionService.subscribe(mealPlan, new Date());
         });
     }
 
     function viewDetails(mealPlan){
-        vm.selectedMealPlan = mealPlan;
-        modalService.showModal($scope, 'templates/foodBuddyModal.html');
+        var filter = {
+        where: {
+            mealPlanId: mealPlan.id
+        },
+        include: {
+            relation: 'meal',
+        },
+            order: 'day ASC'
+        };
+
+        TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+            mealPlan.meals = _sortMealPlanMeals(data);
+            vm.selectedMealPlan = mealPlan;
+            modalService.showModal($scope, 'templates/foodBuddyModal.html');
+        });
+    }
+
+    function _sortMealPlanMeals(mealPlanMealData) {
+        var mealPlanMeals = [];
+        var mealPlanMeal = null;
+        var lastItem = null;
+        lastItem = mealPlanMealData[mealPlanMealData.length-1];
+
+        for (var i = 0; i < lastItem.day; i++) {
+            mealPlanMeal = {
+                breakfast: null,
+                lunch: null,
+                dinner: null,
+                snack: null
+            };
+            mealPlanMeals.push(mealPlanMeal);
+        }
+        // IDEA: Sort meal plan meals data
+        mealPlanMealData.forEach(function (mealPlanMeal) {
+            mealPlanMeals[mealPlanMeal.day - 1][mealPlanMeal.meal.type] = mealPlanMeal.meal;
+        });
+        return mealPlanMeals;
     }
 }])
-   
+
 .controller('messagingCtrl', ['$scope', '$stateParams',
 function ($scope, $stateParams) {
 
 
 }])
-   
+
 .controller('subscriptionsCtrl', ['$scope', '$stateParams',
 function ($scope, $stateParams) {
 
@@ -152,7 +232,7 @@ function($scope, $stateParams, vitalTrackerService, popupService){
         data.exerciseLevel = data.exerciseLevel.value;
         vitalTrackerService.calculate(data).then(function(eer){
             var message = [
-                '<p> Age: ' + data.age + '</p>', 
+                '<p> Age: ' + data.age + '</p>',
                 '<p> Gender: ' + data.gender + '</p>',
                 '<p> Height: ' + [data.height.feet, data.height.inches].join('\'') + '</p>',
                 '<p> Weight: ' + vm.data.weight + '</p>',
@@ -160,21 +240,21 @@ function($scope, $stateParams, vitalTrackerService, popupService){
                 '<b>' +  eer + '</b>', ' calories/day to maintain.'
                 ].join('');
             popupService.alertPopup('Total Calories Including Exercise', message);
-            clearForm();    
+            clearForm();
         });
     }
 
     function clearForm(){
         vm.data = {};
     }
-    
+
 }])
 
-.controller('mealPlannerCtrl', ['$scope', '$stateParams', 'MealItem', 
+.controller('mealPlannerCtrl', ['$scope', '$stateParams', 'MealItem',
     'actionSheetService', '$ionicScrollDelegate', 'modalService', 'loadingService',
 function($scope, $stateParams, MealItem, actionSheetService, $ionicScrollDelegate, modalService, loadingService){
     var vm = this;
-    vm.data = {};    
+    vm.data = {};
     vm.meals = [];
     vm.types = [];
     vm.selectedMeals = {
@@ -213,12 +293,12 @@ function($scope, $stateParams, MealItem, actionSheetService, $ionicScrollDelegat
             { text: '<i class="icon ion-arrow-up-c"></i> Scroll Top'},
             { text: '<i class="icon ion-bag"></i> View Selected Items'}
         ];
-        actionSheetService.showActionSheet(buttons, 'Meal Planner', '', 'Cancel', 
+        actionSheetService.showActionSheet(buttons, 'Meal Planner', '', 'Cancel',
         function cancel(){
-            // Cancel callback    
+            // Cancel callback
         }, function buttonClicked(index){
             switch(index){
-                case 0: 
+                case 0:
                     $ionicScrollDelegate.scrollTop(true);
                     break;
                 case 1:
@@ -252,10 +332,10 @@ function($scope, $stateParams, MealItem, actionSheetService, $ionicScrollDelegat
         });
     }
 }])
-   
-.controller('foodBuddyCtrl', ['$scope', '$stateParams', 'MealPlan', 'subscriptionService', 'User',
+
+.controller('foodBuddyCtrl', ['$scope', '$stateParams', 'TM_MealMealPlan', 'MealPlan', 'subscriptionService', 'User',
     'modalService',
-function ($scope, $stateParams, MealPlan, subscriptionService, User, modalService) {
+function ($scope, $stateParams, TM_MealMealPlan, MealPlan, subscriptionService, User, modalService) {
     var vm = this;
     vm.user = {};
     vm.recommendations = [];
@@ -276,18 +356,65 @@ function ($scope, $stateParams, MealPlan, subscriptionService, User, modalServic
         }).catch(function(err){
             console.log(err);
         });
-    } 
+    }
 
     function subscribe(mealPlan){
-        subscriptionService.subscribe(mealPlan, new Date());
+        var filter = {
+            where: {
+                mealPlanId: mealPlan.id
+            },
+            include: {
+                relation: 'meal',
+            },
+            order: 'day ASC'
+        };
+        TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+            mealPlan.meals = _sortMealPlanMeals(data);
+            subscriptionService.subscribe(mealPlan, new Date());
+        });
     }
 
     function viewDetails(mealPlan){
-        vm.selectedMealPlan = mealPlan;
-        modalService.showModal($scope, 'templates/foodBuddyModal.html');
+        var filter = {
+        where: {
+            mealPlanId: mealPlan.id
+        },
+        include: {
+            relation: 'meal',
+        },
+            order: 'day ASC'
+        };
+
+        TM_MealMealPlan.find({filter:filter}).$promise.then(function (data) {
+            mealPlan.meals = _sortMealPlanMeals(data);
+            vm.selectedMealPlan = mealPlan;
+            modalService.showModal($scope, 'templates/foodBuddyModal.html');
+        });
+    }
+
+    function _sortMealPlanMeals(mealPlanMealData) {
+        var mealPlanMeals = [];
+        var mealPlanMeal = null;
+        var lastItem = null;
+        lastItem = mealPlanMealData[mealPlanMealData.length-1];
+
+        for (var i = 0; i < lastItem.day; i++) {
+            mealPlanMeal = {
+                breakfast: null,
+                lunch: null,
+                dinner: null,
+                snack: null
+            };
+            mealPlanMeals.push(mealPlanMeal);
+        }
+        // IDEA: Sort meal plan meals data
+        mealPlanMealData.forEach(function (mealPlanMeal) {
+            mealPlanMeals[mealPlanMeal.day - 1][mealPlanMeal.meal.type] = mealPlanMeal.meal;
+        });
+        return mealPlanMeals;
     }
 }])
-   
+
 .controller('settingsCtrl', ['$scope', '$stateParams',
 function ($scope, $stateParams) {
     var vm = this;
@@ -305,7 +432,7 @@ function ($scope, $stateParams) {
     }
 
 }])
-      
+
 .controller('menuCtrl', ['$scope', '$stateParams', '$state', 'User', '$ionicHistory',
 function ($scope, $stateParams, $state, User, $ionicHistory) {
     var vm = this;
@@ -327,7 +454,7 @@ function ($scope, $stateParams, $state, User, $ionicHistory) {
     }
 
 }])
-   
+
 .controller('loginCtrl', ['$scope', '$stateParams', '$state', 'User', 'facebookPluginService', 'signupService', 'loadingService', 'loginService',
 function ($scope, $stateParams, $state, User, facebookPluginService, signupService, loadingService, loginService) {
     var vm = this;
@@ -387,7 +514,7 @@ function ($scope, $stateParams, $state, User, facebookPluginService, signupServi
         });
     }
 }])
-   
+
 .controller('signupCtrl', ['$scope', '$stateParams', '$state', 'signupService', 'loadingService',
 function ($scope, $stateParams, $state, signupService, loadingService) {
     var vm = this;
@@ -435,10 +562,10 @@ function($scope, $stateParams, User, bmiService, loadingService){
             if(value.account.hasOwnProperty('profile')){
                 value.account.vitals.weight = Number.parseInt(value.account.vitals.weight);
                 if(value.account.profile.hasOwnProperty('birthday')){
-                    value.account.profile.birthday = new Date(value.account.profile.birthday);        
+                    value.account.profile.birthday = new Date(value.account.profile.birthday);
                 }
             }
-            
+
             vm.data = value;
         });
     }
@@ -463,4 +590,3 @@ function($scope, $stateParams, User, bmiService, loadingService){
         vm.data.account.vitals.status = bmiService.bmiStatus(vm.data.account.vitals.bmi);
     }
 }])
- 
