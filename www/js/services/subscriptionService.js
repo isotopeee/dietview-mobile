@@ -8,7 +8,6 @@ angular
 
         function subscribe(mealPlan, startDate){
             var data = {
-                customer: {},
                 paymentDetails: {
                     isPaid: false,
                     total: mealPlan.price,
@@ -21,16 +20,13 @@ angular
                 type: mealPlan.type,
                 remarks: '',
                 status: 'pending',
-                isActive: false,
-                userId: 0
+                isActive: false
             };
 
             return getUserProfile().then(function(user){
-                data.customer = user;
-                data.userId = user.id;
                 data.endDate = addDays(data.startDate, mealPlan.meals.length);
-                
-                return User.subscriptions.create({id: data.userId}, data).$promise.then(function(value, responseHeaders){
+
+                return User.subscriptions.create({id: user.id}, data).$promise.then(function(value, responseHeaders){
                     return value;
                 });
             });
