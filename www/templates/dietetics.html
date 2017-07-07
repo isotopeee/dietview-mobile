@@ -1,42 +1,23 @@
-<!-- <ion-view title="Subscriptions" id="page2">
-  <ion-content padding="true" class="has-header">
-     <ion-list>
-          <ion-item class="item-divider">
-              List of Subscriptions
-          </ion-item>
-          <ion-item ng-repeat="s in vm.subscriptions" ng-click="vm.viewDetails(s.mealPlan)">
-              <label class="item-input">
-                  <span class="input-label">{{s.mealPlan.name}}</span>
-                  <span class="input-label">{{s.mealPlan.description}}</span>
-                  <span class="input-label">{{s.status}}</span>
-              </label>
-          </ion-item>
-     </ion-list>
-  </ion-content>
-</ion-view> -->
 <ion-view title="Subscriptions" id="page2">
   <ion-content padding="false" class="has-header">
-     <ion-list>
-          <ion-item ng-repeat="s in vm.subscriptions">
-            <div class="list card">
-
-<div class="item">
-  <h2>{{ s.mealPlan.name }}</h2>
-  <p>Subscription Date: {{s.subscriptionDate | date}}</p>
-  <span class="{{s.status === 'pending' ? 'energized' : s.status === 'active' ? 'positive' : 'assertive' }}" ng-if="s.status === 'pending'">{{s.status | uppercase}}<p>
-</div>
-
-<a href="javascript:void(0);" class="item item-icon-left positive" ng-click="vm.viewDetails(s.mealPlan)">
-  <i class="icon ion-eye"></i>
-  Meal Plan Details
-</a>
-<a ng-if="s.status === 'pending'" href="javascript:void(0);" class="item item-icon-left balanced" ng-click="vm.viewDetails(s.mealPlan)">
-  <i class="icon ion-cash"></i>
-  Upload Payment Details
-</a>
-
-</div>
-          </ion-item>
-     </ion-list>
+    <ion-list>
+      <ion-item ng-repeat="s in vm.subscriptions">
+        <div class="list card">
+          <div class="item">
+            <h2>{{ s.mealPlan.name }}</h2>
+            <p>Subscription Date: {{s.subscriptionDate | date}}</p>
+            <span class="{{s.status === 'pending' ? 'energized' : s.status === 'active' ? 'positive' : 'assertive' }}" ng-if="s.status === 'pending'">{{s.status | uppercase}}<p>
+          </div>
+          <a href="javascript:void(0);" class="item item-icon-left positive" ng-click="vm.viewDetails(s.mealPlan)">
+            <i class="icon ion-eye"></i>
+            Meal Plan Details
+          </a>
+          <a ng-if="s.status === 'pending'" href="javascript:void(0);" class="item item-icon-left balanced" ng-click="vm.loadImage(s)">
+            <i class="icon ion-cash"></i>
+            Upload Payment Details
+          </a>
+        </div>
+      </ion-item>
+   </ion-list>
   </ion-content>
 </ion-view>

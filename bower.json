@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ionic-datepicker": "^1.2.1",
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "ngCordova": "^0.1.27-alpha"
   }
 }

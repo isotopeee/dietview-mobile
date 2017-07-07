@@ -1,5 +1,5 @@
 angular.module('app', [
-  'ionic', 'ngMessages', 'app.controllers',
+  'ionic', 'ngCordova', 'ngMessages', 'app.controllers',
   'app.routes','app.directives', 'ngResource',
   'lbServices',  'app.interceptors', 'app.services'])
 
@@ -8,9 +8,8 @@ angular.module('app', [
 })
 
 .config(function(LoopBackResourceProvider){
-  var urlBase = 'https://dietview-api.mybluemix.net/api';
+  var urlBase = 'http://192.168.7.52:3000/api';
   LoopBackResourceProvider.setUrlBase(urlBase);
-  //  LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
   window.localStorage.setItem('UrlBase', urlBase);
 })
 
