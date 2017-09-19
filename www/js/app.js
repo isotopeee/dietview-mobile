@@ -8,7 +8,8 @@ angular.module('app', [
 })
 
 .config(function(LoopBackResourceProvider){
-  var urlBase = 'http://192.168.7.52:3000/api';
+  // var urlBase = 'http://localhost:3000/api';
+  var urlBase = 'http://dietview-api.mybluemix.net';
   LoopBackResourceProvider.setUrlBase(urlBase);
   window.localStorage.setItem('UrlBase', urlBase);
 })
