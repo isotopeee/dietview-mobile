@@ -656,12 +656,31 @@ angular.module('app.controllers', [])
     }
   ])
 
-  .controller('loginCtrl', ['$scope', '$stateParams', '$state', 'User', 'facebookPluginService', 'signupService', 'loadingService', 'loginService',
-    function($scope, $stateParams, $state, User, facebookPluginService, signupService, loadingService, loginService) {
+  .controller('loginCtrl', ['$cookies', '$scope', '$stateParams', '$state', 'User', 'facebookPluginService', 'signupService', 'loadingService', 'loginService', 'LoopBackAuth',
+    function($cookies, $scope, $stateParams, $state, User, facebookPluginService, signupService, loadingService, loginService, LoopBackAuth) {
       var vm = this;
       vm.profile = {};
       vm.login = login;
-      vm.loginFacebook = loginFacebook;
+      // vm.loginFacebook = loginFacebook;
+
+      activate();
+
+      function activate() {
+        const accessTokenId = $cookies.get('access_token');
+        const userId = $cookies.get('userId');
+
+        if (accessTokenId && userId) {
+          LoopBackAuth.setUser(
+            accessTokenId, userId, userId);
+          LoopBackAuth.rememberMe = false
+          LoopBackAuth.save();
+
+          $cookies.remove('access_token');
+          $cookies.remove('userId');
+
+          $state.go('profileTabs.profile');
+        }
+      }
 
       function login(profile) {
 
@@ -677,43 +696,43 @@ angular.module('app.controllers', [])
         vm.profile = {};
       }
 
-      function loginFacebook() {
+      // function loginFacebook() {
 
-        // facebookPluginService.createUserAccount(function(data){
-        //     facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
-        //         .then(function(hasFbProp){
-        //             if(hasFbProp){
-        //                 vm.login(data.user);
-        //             }
-        //             else{
-        //                 signupService.signUp(data).then(function(value){
-        //                     vm.login(data.user);
-        //                 });
-        //             }
+      //   // facebookPluginService.createUserAccount(function(data){
+      //   //     facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
+      //   //         .then(function(hasFbProp){
+      //   //             if(hasFbProp){
+      //   //                 vm.login(data.user);
+      //   //             }
+      //   //             else{
+      //   //                 signupService.signUp(data).then(function(value){
+      //   //                     vm.login(data.user);
+      //   //                 });
+      //   //             }
 
-        //         })
-        //         .catch(function(err){
-        //             loadingService.errorNotify(err, 5000);
-        //         });
-        // });
+      //   //         })
+      //   //         .catch(function(err){
+      //   //             loadingService.errorNotify(err, 5000);
+      //   //         });
+      //   // });
 
 
-        facebookPluginService.createUserAccount(function(data) {
-          signupService.signUp(data).then(function(value) {
-            vm.login(data.user);
-          }).catch(function(err) {
-            //Handle existing user here
+      //   facebookPluginService.createUserAccount(function(data) {
+      //     signupService.signUp(data).then(function(value) {
+      //       vm.login(data.user);
+      //     }).catch(function(err) {
+      //       //Handle existing user here
 
-            facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
-              .then(function(hasFbProp) {
-                if (hasFbProp)
-                  vm.login(data.user);
-                else
-                  loadingService.errorNotify(err, 5000);
-              });
-          });
-        });
-      }
+      //       facebookPluginService.isExistingUserHasFacebookProp(data.user.email)
+      //         .then(function(hasFbProp) {
+      //           if (hasFbProp)
+      //             vm.login(data.user);
+      //           else
+      //             loadingService.errorNotify(err, 5000);
+      //         });
+      //     });
+      //   });
+      // }
     }
   ])
 

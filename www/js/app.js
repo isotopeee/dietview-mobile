@@ -1,5 +1,5 @@
 angular.module('app', [
-  'ionic', 'ngCordova', 'ngMessages', 'app.controllers',
+  'ionic', 'ngCordova', 'ngMessages', 'ngCookies', 'app.controllers',
   'app.routes','app.directives', 'ngResource',
   'lbServices',  'app.interceptors', 'app.services'])
 

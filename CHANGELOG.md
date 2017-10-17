@@ -1,7 +1,7 @@
 ## Version 0.9
     - Change 'Foobu' tab title to 'Recommendations'
     - Limit birthday field maximum value to '2010-01-01'
-
+    - Implement social media integration
 
 ## Version 0.8
     - Update lb-services.js
