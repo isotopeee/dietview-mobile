@@ -736,13 +736,14 @@ angular.module('app.controllers', [])
     }
   ])
 
-  .controller('signupCtrl', ['$scope', '$stateParams', '$state', 'signupService', 'loadingService',
-    function($scope, $stateParams, $state, signupService, loadingService) {
+  .controller('signupCtrl', ['$scope', '$stateParams', '$state', 'signupService', 'loadingService', 'modalService',
+    function($scope, $stateParams, $state, signupService, loadingService, modalService) {
       var vm = this;
       vm.data = {};
       vm.signUp = signUp;
       vm.confirmPassword = '';
       vm.checkPassword = checkPassword;
+      vm.showTerms = showTerms;
 
       function signUp(data) {
 
@@ -766,6 +767,10 @@ angular.module('app.controllers', [])
       function clearForm() {
         vm.data = {};
         vm.confirmPassword = '';
+      }
+
+      function showTerms() {
+        modalService.showModal($scope, 'templates/termsModal.html');
       }
     }
   ])
